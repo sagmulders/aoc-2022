@@ -25,6 +25,7 @@ foreach (var line in data)
 elfs.Add(elf);
 
 Console.WriteLine($"Elf with most calories: {elfs.OrderByDescending(x=>x.Food).First().Food}");
+Console.WriteLine($"Elf top 3 total: {elfs.OrderByDescending(x=>x.Food).Take(3).Sum(x => x.Food)}");
 
 
 
