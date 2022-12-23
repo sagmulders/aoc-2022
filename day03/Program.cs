@@ -4,15 +4,19 @@ var path = Path.Combine(Environment.CurrentDirectory, "data");
 var rucksacks = File.ReadAllLines(path);
 var priority = 0;
 
-foreach (var r in rucksacks)
+for (int i = 0; i < rucksacks.Length / 3; i++)
 {
-    var left = r.Substring(0, r.Length / 2);
-    var right = r.Substring(r.Length / 2);
+    var group = rucksacks.Skip(i * 3).Take(3);
+    
+    var duplicate= GetDuplicate(group.ElementAt(0), group.ElementAt(1));
+    duplicate = GetDuplicate(duplicate, group.ElementAt(2));
 
-    var duplicate = left.Where(x => right.Contains(x)).Distinct().Single();
 
-    priority += GetPrio(duplicate);
+    priority += GetPrio(duplicate.Distinct().Single());
+}
 
+IEnumerable<char> GetDuplicate(IEnumerable<char> left, IEnumerable<char> right) {
+    return left.Where(x => right.Contains(x)).Distinct();
 }
 
 int GetPrio(char c)
@@ -20,7 +24,7 @@ int GetPrio(char c)
     if (char.IsLower(c))
         return (int)c - 96;
     else
-        return (int)c - 64+26;
+        return (int)c - 64 + 26;
 }
 
 Console.WriteLine($"Priority {priority}");
