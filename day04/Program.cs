@@ -11,11 +11,11 @@ bool overlaps(string pair)
 {
     // 6-6,4-6
 
-    var one = pair.Split(",").First().Split("-").Select(x=> int.Parse(x));
-    var two = pair.Split(",").Last().Split("-").Select(x=> int.Parse(x));
+    var one = pair.Split(",").First().Split("-").Select(x => int.Parse(x)).ToArray();
+    var two = pair.Split(",").Last().Split("-").Select(x => int.Parse(x)).ToArray();
 
     // one in two
-    return ((one.ElementAt(0) >= two.ElementAt(0) && one.ElementAt(1) <= two.ElementAt(1)) ||
+    return ((one[0] >= two[0] && one[0] <= two[1]) ||
      // two in one 
-     two.ElementAt(0) >= one.ElementAt(0) && two.ElementAt(1) <= one.ElementAt(1));
+     one[1] >= two[0] && one[0] <= two[1]);
 }
