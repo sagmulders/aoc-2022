@@ -66,6 +66,15 @@
         var f = root.Flatten().Where(x => x.IsDir && x.GetTotalSize() < 100000);
 
         Console.WriteLine($"Total size {root.GetTotalSize()} {f.Sum(x => x.GetTotalSize())}");
+
+        var totalSpace = 70000000;
+        var unusedSpace = totalSpace - root.GetTotalSize();
+        var requiredSpace = 30000000;
+
+
+        var toDelete = root.Flatten().Where(x => x.IsDir).OrderBy(x => x.GetTotalSize()).First(x => x.GetTotalSize() > (requiredSpace - unusedSpace));
+
+        Console.WriteLine(toDelete.GetTotalSize());
     }
 }
 
