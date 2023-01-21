@@ -14,15 +14,15 @@ internal class Program
         foreach (var step in data.Where(x => x.StartsWith("move")))
         {
             var parts = step.Split(" ");
+            var itemsToMove = new List<string>();
 
             for (int i = 0; i < int.Parse(parts[1]); i++)
             {
-                var item = stacks[int.Parse(parts[3]) - 1].Pop();
-
-                stacks[int.Parse(parts[5]) - 1].Push(item);
-
+                itemsToMove.Add(stacks[int.Parse(parts[3]) - 1].Pop());
             }
 
+            itemsToMove.Reverse();
+            itemsToMove.ForEach(x=> stacks[int.Parse(parts[5]) - 1].Push(x));
         }
 
         Console.WriteLine($"{string.Join("",stacks.Select(x => x.Peek()))}");
@@ -37,7 +37,6 @@ internal class Program
         {
             stacks[i] = new Stack<string>();
         }
-
 
         foreach (var line in data)
         {
